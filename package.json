@@ -1,0 +1,19 @@
+{
+  "name": "render-code",
+  "version": "0.0.0",
+  "description": "Show simple JavaScript as HTML DIVs",
+  "main": "render-code.js",
+  "dependencies": {
+    "module-library": "^0.89.0",
+    "web-element": "*"
+  },
+  "devDependencies": {
+    "browser-bridge": "^0.140.0",
+    "web-site": "^0.49.0",
+    "basic-styles": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/erikpukinskis/render-code.git"
+  }
+}
