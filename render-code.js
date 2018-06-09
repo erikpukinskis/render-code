@@ -137,10 +137,10 @@ module.exports = library.export(
 
     var stylesheet = element.stylesheet([
       element.style("line", {
-        "font-family": "Times New Roman",
         "line-height": "1.25em",
         "margin-bottom": "0.4em",
-        "font-size": "1.6em",
+        "font-family": "sans-serif",
+        "font-size": "1.4em",
         "display": "block",
         "max-width": "18em",
         "border-right": "0.1em solid  #fff6f6",
@@ -198,7 +198,7 @@ module.exports = library.export(
       }),
 
       element.style("txt", {
-        "color": "#382e2e",
+        "color": "rgba(10,0,0,0.75)",
         "-webkit-font-smoothing": "antialiased",
         "display": "inline",
       }),
@@ -213,7 +213,7 @@ module.exports = library.export(
 
     // Moon colors
 
-    var DAY_BACKGROUND = [255,253,255]
+    var DAY_BACKGROUND = [255,210,255]
     var NIGHT_BACKGROUND = [230,230,245]
     var DAY_HIGLIGHT = [255,240,240]
     var NIGHT_HIGHLIGHT = [250,250,255]
@@ -231,7 +231,7 @@ module.exports = library.export(
 
     function percentToNewMoon () {
       var OFFSET_BETWEEN_MOON_AND_UNIX_EPOCH = 0.3 // this is a fudge number
-      var moonOrbitInDays = 27.32158
+      var moonOrbitInDays = 0.0001 // 27.32158
       var seconds = 1000
       var minutes = 60 * seconds
       var hours = 60 * minutes
