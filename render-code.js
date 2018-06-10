@@ -231,9 +231,11 @@ module.exports = library.export(
       return "rgb("+component(0)+","+component(1)+","+component(2)+")"
     }
 
+    var MOON_SPEED_OVERRIDE = null
+
     function percentToNewMoon () {
       var OFFSET_BETWEEN_MOON_AND_UNIX_EPOCH = 0.3 // this is a fudge number
-      var moonOrbitInDays = 0.0001 // 27.32158
+      var moonOrbitInDays = MOON_SPEED_OVERRIDE || 27.32158
       var seconds = 1000
       var minutes = 60 * seconds
       var hours = 60 * minutes
@@ -254,6 +256,11 @@ module.exports = library.export(
         bridge.remember("write-code")
       }
     }
+
+    renderCode.setMoonSpeed =
+      function(value) {
+        MOON_SPEED_OVERRIDE = value
+      }
 
     return renderCode
   }
