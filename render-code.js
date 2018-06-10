@@ -34,6 +34,9 @@ module.exports = library.export(
           "sym",{
           "background": highlight}),
         element.style(
+          "empty",{
+          "border-color": highlight}),
+        element.style(
           "body",{
           "background": bodyBackground}),
       ])
@@ -143,7 +146,6 @@ module.exports = library.export(
         "font-size": "1.4em",
         "display": "block",
         "max-width": "18em",
-        "border-right": "0.1em solid  #fff6f6",
         "box-sizing": "border-box",
         "text-indent": "-1.4em",
       }),
@@ -185,11 +187,11 @@ module.exports = library.export(
       }),
 
       element.style("empty", {
-        "width": "0.66em",
-        "height": "0.66em",
+        "width": "0.75em",
+        "height": "0.75em",
         "box-sizing": "border-box",
         "border-radius": "0.22em",
-        "border": "0.1em solid #ddd",
+        "border": "0.15em solid #ddd",
       }),
 
 
