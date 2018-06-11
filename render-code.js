@@ -34,7 +34,7 @@ module.exports = library.export(
           "sym",{
           "background": highlight}),
         element.style(
-          "empty",{
+          "empty, sym.logo",{
           "border-color": highlight}),
         element.style(
           "body",{
@@ -65,12 +65,24 @@ module.exports = library.export(
           }
         }
 
+        function upTilSymbols(text) {
+          return text.match(/^[^"}{)(=]*/)[0]
+        }
+
         function biteText() {
           if (grabSymbol(line)) {
             return
           }
           if (line.length > 0) {
-            var text = line.match(/^[^"}{)(=]*/)[0]
+            var last3 = line.substr(line.length - 3, 3)
+
+            if (last3 == "new") {
+              var withoutNew = line.substr(0, line.length - 3)
+              var text = upTilSymbols(withoutNew)
+            } else {
+              var text = upTilSymbols(line)
+            }
+
             line = line.slice(text.length)
             return text
           }
@@ -128,9 +140,11 @@ module.exports = library.export(
       if (line == ",") {
         return ","
       }
-      var parts = line.match(/^(function|var|new|ezjs)/)
+      var parts = line.match(/^(function|var|ezjs)/)
       if (parts) {
         return parts[0]
+      } else if (line == "new") {
+        return "new"
       }
       var firstCharacter = line[0]
       if (["*", "\"", "{", "}", "(", ")", "[", "]", "=", ":", ".", ","].includes(firstCharacter)) {
@@ -154,7 +168,7 @@ module.exports = library.export(
         "font-family": "sans-serif",
         "text-indent": "0",
         "text-align": "center",
-        "width": "0.66em",
+        "width": "0.8em",
         "background-color": "#f6f6ff",
         "color": "#9b9bd9",
         "border-radius": "0.1em",
@@ -175,10 +189,18 @@ module.exports = library.export(
       }), 
 
       element.style("sym.logo", {
-        "margin-top": "1em",
-        "line-height": "1.2em",
-        "font-size": "130%",
+        "margin-top": "0.5em",
+        "line-height": "0.85em",
+        "vertical-align": "0.1em",
+        "font-size": "150%",
+        "box-sizing": "border-box",
+        "border-radius": "0.35em",
+        "background": "none",
+        "border": "0.21em solid",
+        "opacity": "0.75",
+        "padding-bottom": "0.1em",
       }),
+
 
       element.style("sym, empty", {
         "display": "inline-block",
@@ -187,11 +209,12 @@ module.exports = library.export(
       }),
 
       element.style("empty", {
-        "width": "0.75em",
-        "height": "0.75em",
+        "width": "1.2em",
+        "height": "1.2em",
         "box-sizing": "border-box",
-        "border-radius": "0.22em",
-        "border": "0.15em solid #ddd",
+        "border-radius": "0.35em",
+        "border": "0.25em solid #ddd",
+        "vertical-align": "-0.29em",
       }),
 
 
@@ -234,14 +257,13 @@ module.exports = library.export(
     var MOON_SPEED_OVERRIDE = null
 
     function percentToNewMoon () {
-      var OFFSET_BETWEEN_MOON_AND_UNIX_EPOCH = 0.3 // this is a fudge number
-      var moonOrbitInDays = MOON_SPEED_OVERRIDE || 27.32158
+      var moonOrbitInDays = 27.32158
       var seconds = 1000
       var minutes = 60 * seconds
       var hours = 60 * minutes
       var oneDay = 24 * hours
       var daysSinceEpoch = Date.now() / oneDay
-      var daysSinceFirstMoon = daysSinceEpoch + moonOrbitInDays * OFFSET_BETWEEN_MOON_AND_UNIX_EPOCH
+      var daysSinceFirstMoon = daysSinceEpoch + moonOrbitInDays  + MOON_SPEED_OVERRIDE||0
       var orbitsSinceEpoch = Math.floor(daysSinceFirstMoon / moonOrbitInDays)
       var daysSinceNewMoon = daysSinceFirstMoon - orbitsSinceEpoch * moonOrbitInDays
       var percent = daysSinceNewMoon / moonOrbitInDays
