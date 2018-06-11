@@ -8,41 +8,6 @@ module.exports = library.export(
     function renderCode(bridge, lines) {
       prepareBridge(bridge)
 
-      var percent = percentToNewMoon()
-
-      var base = percent * 2
-
-      if (base > 1) {
-        var overage = base - 1.0
-        var distance = 1 - overage
-      } else {
-        var distance = base
-      }
-
-      var highlight = rgbBetween(
-        DAY_HIGLIGHT,
-        NIGHT_HIGHLIGHT,
-        distance)
-
-      var bodyBackground = rgbBetween(
-        DAY_BACKGROUND,
-        NIGHT_BACKGROUND,
-        distance)
-
-      var theme = element.stylesheet([
-        element.style(
-          "sym",{
-          "background": highlight}),
-        element.style(
-          "empty, sym.logo",{
-          "border-color": highlight}),
-        element.style(
-          "body",{
-          "background": bodyBackground}),
-      ])
-
-      bridge.addToHead(theme)
-
       var allowObjects = lines[0] == "dogs.do("
       var stack = []
 
@@ -235,43 +200,6 @@ module.exports = library.export(
       })
     ])
 
-
-    // Moon colors
-
-    var DAY_BACKGROUND = [255,210,255]
-    var NIGHT_BACKGROUND = [230,230,245]
-    var DAY_HIGLIGHT = [255,240,240]
-    var NIGHT_HIGHLIGHT = [250,250,255]
-
-    function rgbBetween(color1, color2, distance) {
-
-      function component(x) {
-        var pointsDifferent = color2[x] - color1[x]
-        var offset = pointsDifferent * distance
-        return color1[x] + offset
-      }
-
-      return "rgb("+component(0)+","+component(1)+","+component(2)+")"
-    }
-
-    var MOON_SPEED_OVERRIDE = null
-
-    function percentToNewMoon () {
-      var moonOrbitInDays = 27.32158
-      var seconds = 1000
-      var minutes = 60 * seconds
-      var hours = 60 * minutes
-      var oneDay = 24 * hours
-      var daysSinceEpoch = Date.now() / oneDay
-      var daysSinceFirstMoon = daysSinceEpoch + moonOrbitInDays  + MOON_SPEED_OVERRIDE||0
-      var orbitsSinceEpoch = Math.floor(daysSinceFirstMoon / moonOrbitInDays)
-      var daysSinceNewMoon = daysSinceFirstMoon - orbitsSinceEpoch * moonOrbitInDays
-      var percent = daysSinceNewMoon / moonOrbitInDays
-
-      return percent
-    }
-
-
     function prepareBridge(bridge) {
       if (!bridge.remember("write-code")) {
         bridge.addToHead(stylesheet)
@@ -279,10 +207,7 @@ module.exports = library.export(
       }
     }
 
-    renderCode.setMoonSpeed =
-      function(value) {
-        MOON_SPEED_OVERRIDE = value
-      }
+
 
     return renderCode
   }
