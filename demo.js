@@ -6,8 +6,6 @@ library.using(
     var baseBridge = new BrowserBridge()
     var site = new WebSite()
     basicStyles.addTo(baseBridge)
-    var page = element(
-      "hi")
 
     var webPage = [
       "library.using([",
@@ -15,9 +13,9 @@ library.using(
       "  \"web-site\",",
       "  \"browser-bridge\",",
       "  \"basic-styles\"],",
-      "  function(element, WebSite, BrowserBridge, basicStyles) {",
-      "    var baseBridge = new BrowserBridge()",
-      "    var site = new WebSite()",
+      "  function*(element, WebSite, BrowserBridge, basicStyles) {",
+      "    var baseBridge = new BrowserBridge(*)",
+      "    var site = new WebSite(*)",
       "    basicStyles.addTo(",
       "      baseBridge)",
       "    var page = element(",
@@ -26,17 +24,18 @@ library.using(
       "    site.addRoute(",
       "      \"get\",",
       "      \"/\",",
-      "      baseBridge.requestHandler(",
-      "        page))",
-      "    site.start(PORT)})",
+      "      baseBridge.requestHandler(page))",
+      "    site.start(PORT)",
+      "    *})",
     ]
 
     var activity = [
       "orMaybe(",
       "  just,",
-      "  \"a bit of poetry\")",
-      "    *",
-      "    ezjs",
+      "  \"a bit of poetry\"",
+      "  \"new and bold\")",
+      "*",
+      "ezjs",
     ]
 
     var baseBridge = new BrowserBridge()

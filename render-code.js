@@ -105,7 +105,7 @@ module.exports = library.export(
       if (line == ",") {
         return ","
       }
-      var parts = line.match(/^(function|var|ezjs)/)
+      var parts = line.match(/^\s*(function|var|ezjs|new)/)
       if (parts) {
         return parts[0]
       } else if (line == "new") {
@@ -133,7 +133,7 @@ module.exports = library.export(
         "font-family": "sans-serif",
         "text-indent": "0",
         "text-align": "center",
-        "width": "0.8em",
+        "width": "0.9em",
         "background-color": "#f6f6ff",
         "color": "#9b9bd9",
         "border-radius": "0.1em",
@@ -169,8 +169,8 @@ module.exports = library.export(
 
       element.style("sym, empty", {
         "display": "inline-block",
-        "margin-left": "0.2em",
-        "margin-right": "0.2em",
+        "margin-left": "0.15em",
+        "margin-right": "0.15em",
       }),
 
       element.style("empty", {
