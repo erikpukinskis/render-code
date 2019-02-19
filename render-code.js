@@ -85,7 +85,7 @@ module.exports = library.export(
         }
       }
 
-      function noticeClosingSymbol(stack, sym) {
+      function noticeClosingSymbol(sym) {
         if (sym == "]") {
           var peek = stack.pop()
           if (peek != "array literal") {
