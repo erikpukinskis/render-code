@@ -69,23 +69,47 @@ module.exports = library.export(
         segments.separators || [],
         segments.outros || [])
 
-      allSymbols.forEach(function(sym) {
-        if (["[", "{"].includes(sym)) {
-          stack.push(sym)
+      var isFunctionLiteral = contains(segments.intros, "function")
+
+      function noticeOpeningSymbol(sym) {
+        if (sym == "[") {
+          stack.push("array literal")
+        } else if (sym == "{") {
+          if (isFunctionLiteral) {
+            stack.push(
+              "function literal")
+          } else {
+            stack.push(
+              "object literal")
+          }
         }
+      }
 
-        if (["}", "]"].includes(sym)) {
-          stack.pop()
-        }        
-      })
+      function noticeClosingSymbol(stack, sym) {
+        if (sym == "]") {
+          var peek = stack.pop()
+          if (peek != "array literal") {
+            throw new Error("Expected to be closing an array")
+          }
+        } else if (sym == "}") {
+          var peek = stack.pop()
+          if (peek != "function literal" && peek != "object literal") {
+            throw new Error("Expected to be closing a function or object literal")
+          }
+        }      
+      }
 
-      var renSym = renderSym.bind(null, stack)
+      function renderSymbol(sym) {
+        noticeOpeningSymbol(sym)
+        var html = renderSym(stack, sym)
+        noticeClosingSymbol(sym)
+        return html }
 
       while(segments) {
 
         if (segments.intros) {
           contents = contents.concat(segments.intros.map(
-            renSym))}
+            renderSymbol))}
 
         if (segments.firstHalf) {
           contents.push(
@@ -93,7 +117,7 @@ module.exports = library.export(
               segments.firstHalf))}
 
         if (segments.separators) {
-          contents = contents.concat(segments.separators.map(renSym))}
+          contents = contents.concat(segments.separators.map(renderSymbol))}
 
         if (segments.secondHalf) {
           contents.push(
@@ -102,7 +126,7 @@ module.exports = library.export(
 
         if (segments.outros) {
           contents = contents.concat(segments.outros.map(
-            renSym))}
+            renderSymbol))}
 
         segments = segments.remainder && parseALittle(
           segments.remainder)
@@ -141,16 +165,28 @@ module.exports = library.export(
       }
 
       var top = stack[stack.length-1]
-      var b = Math.max(255,stack.length*25)
-      var isObject = false
 
-      if (top == "[") {
+      if (top == "array literal") {
         return classes+"array";
-      } else if (isObject) {
+      } else if (top == "object literal") {
         return classes+"object";
       } else {
         return classes
       }
+    }
+
+    function contains(array, value) {
+      if (!Array.isArray(array)) {
+        return false
+      }
+      var index = -1;
+      var length = array.length;
+      while (++index < length) {
+        if (array[index] == value) {
+          return true;
+        }
+      }
+      return false;
     }
 
     var SYM_PADDING = "8px"
