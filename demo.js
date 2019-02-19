@@ -1,73 +1,85 @@
 var library = require("module-library")(require)
 
-library.using(
-  [".", "web-element", "web-site", "browser-bridge", "basic-styles"],
-  function(renderCode, element, WebSite, BrowserBridge, basicStyles) {
-    var baseBridge = new BrowserBridge()
-    var site = new WebSite()
-    basicStyles.addTo(baseBridge)
+library.using([
+  "./render-code",
+  "web-site",
+  "browser-bridge"],
+  function(renderCode, WebSite, BrowserBridge) {
 
-    var webPage = [
-      "library.using([",
-      "  \"web-element\",",
-      "  \"web-site\",",
-      "  \"browser-bridge\",",
-      "  \"basic-styles\"],",
-      "  function*(element, WebSite, BrowserBridge, basicStyles) {",
-      "    var baseBridge = new BrowserBridge(*)",
-      "    var site = new WebSite(*)",
-      "    basicStyles.addTo(",
-      "      baseBridge)",
-      "    var page = element(",
-      "      \"button\",",
-      "      \"Press Me\")",
-      "    site.addRoute(",
-      "      \"get\",",
-      "      \"/\",",
-      "      baseBridge.requestHandler(page))",
-      "    site.start(PORT)",
-      "    *})",
+    var stylesheet = [
+      "dogs.do(",
+      "  \"laugh\",[",
+      "  \"one\",",
+      "  \"two. two Two they function they drop a line or two\"],",
+      "  // wasn't that a long string?",
+      "  function*(this, that, theOther) {",
+      "    var bone =newTreat(",
+      "      *)",
+      "    dogs.start(",
+      "      3433,{",
+      "      \"go\":\"go go\"},",
+      "      browserBridge(",
+      "        ).forResponse(",
+      "          response))})",
+      "  // ezjs",
     ]
 
-    var activity = [
-      "orMaybe(",
-      "  just,",
-      "  \"a bit of poetry\"",
-      "  \"new and bold\")",
-      "*",
-      "ezjs",
-    ]
+    // var backlog = [
+    //   "prioritizedProductBacklog(",
+    //   "  \"Something is delivered\",",
+    //   "  \"the code that changed is visible where the story was delivered\",",
+    //   "  \"The story is marked as done\",",
+    //   "  \"1 d.u. (delivered unit) is disbursed to the story\",",
+    //   "  \"the various contractors are awared shares in payment for labor and their own materials\",",
+    //   "  \"A Wild ROI Appears:\",",
+    //   "  eROI = (expected cost - expected revenue) / (expected cost * time until realization) * Risks,",
+    //   "  new ROI = opportunity costs / previous revenue + whatever is left from the 1 d.u.,",
+    //   "  \"A delta ROI is awarded to the product manager\",",
+    //   "  \"Any Scrum Guidance Body recommendations and project stories that were active on the Product Story \",",
+    //   "  \"whatever is left of the actual money goes to the Scrum Guidance Body recommendations and into a pot for the collective good\",",
+    //   "  \"People just have d.u.'s. That's it. That's the game.\")",
+    // ]
 
-    var baseBridge = new BrowserBridge()
+
+    // var basicSite = [
+    //   "library.define(",
+    //   "  \"hello world\",[",
+    //   "  \"web-site\",",
+    //   "  \"web-element\",",
+    //   "  \"browser-bridge\"],",
+    //   "  function*(WebSite, element, BrowserBridge) {",
+    //   "    var site =newWebSite(",
+    //   "      *)",
+    //   "    site.start(",
+    //   "      3444)",
+    //   "    var page = element(",
+    //   "      \"hello world\")",
+    //   "    site.addRoute(",
+    //   "      \"get\",",
+    //   "      \"/\",",
+    //   "      function*(_, response) {",
+    //   "        var bridge =newBrowserBridge(",
+    //   "          ).forResponse(",
+    //   "            response)",
+    //   "        bridge.send(",
+    //   "          page)})})",
+    //   "          ezjs",
+    // ]
+
+    var empty = ["*"]
 
     var site = new WebSite()
+    site.start(1710)
 
     site.addRoute(
       "get",
       "/",
       function(request, response) {
-        var bridge = baseBridge.forResponse(response)
+        var bridge = new BrowserBridge().forResponse(response)
 
-        var left = bridge.partial()
-        var right = bridge.partial()
-        renderCode(left, webPage)
-        renderCode(right, activity)
-
-        left = element(element.style({
-          "margin-right": "100px",
-        }), left)
-
-        var page = element(
-          element.style({
-            "display": "flex",
-          }),[
-          left,
-          right])
-
-        bridge.send(page)
+        renderCode(bridge, stylesheet)
       }
     )
-    site.start(9919)
-  })
 
-
+  }
+)
