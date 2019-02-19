@@ -211,9 +211,9 @@ module.exports = library.export(
 
     var stylesheet = element.stylesheet([
       element.style(".editable-container",{
-        "min-width": "16em",
-        "max-width": "24em",
-        "min-height": "4em",
+        "min-width": "15em",
+        "max-width": "25em",
+        "min-height": "5em",
         "border": "3px solid #e5eeff",
         "box-siding": "border-box",
         "border-radius": "8px",
