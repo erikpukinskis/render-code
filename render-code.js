@@ -164,6 +164,9 @@ module.exports = library.export(
 
     var SYM_PADDING = "8px"
     var LOGO_COLOR = "red"
+    var SYM_BACKGROUND = "#e5eeff"
+    var LIGHT_SYM = "#f6f6ff"
+    var DARK_SYM = "#c6d4ef"
 
     var stylesheet = element.stylesheet([
       element.style(".editable-container",{
@@ -195,11 +198,12 @@ module.exports = library.export(
       element.style("sym", {
         "display": "inline",
         "margin": "0 0.15em",
-        "border-left": SYM_PADDING+" solid #f6f6ff",
-        "border-right": SYM_PADDING+" solid #f6f6ff",
+
+        "border-left": SYM_PADDING+" solid "+LIGHT_SYM,
+        "border-right": SYM_PADDING+" solid "+LIGHT_SYM,
         "text-align": "center",
         "font-weight": "bold",
-        "background-color": "#f6f6ff",
+        "background-color": LIGHT_SYM,
         "color": "#7c7cfa",
         "border-radius": "0.2em",
       }),
@@ -232,12 +236,12 @@ module.exports = library.export(
 
       element.style("line.logo sym.text.comment",{
         "margin-top": "2em",
-        "background": "#e5eeff",
-        "border-color": "#e5eeff",
+        "background": SYM_BACKGROUND,
+        "border-color": SYM_BACKGROUND,
       }),
 
       element.style("line.logo txt",{
-        "color": "#c6d4ef",
+        "color": DARK_SYM,
       }),
 
       element.style("empty", {
@@ -245,7 +249,7 @@ module.exports = library.export(
         "font-size": "0.5em",
         "vertical-align": "0.3em",
         "border-radius": "5px",
-        "border": "3px solid #ddd",
+        "border": "3px solid #e5eeff",
       }),
 
 
