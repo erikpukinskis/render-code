@@ -1,6 +1,6 @@
 **render-code** takes a carefully formatted subset of JavaScript and renders it as HTML with various symbols and indentation rendered.
 
-## Demo
+### Demo
 
 ```javascript
 var renderCode = require("./render-code")
@@ -37,6 +37,6 @@ site.addRoute(
       lines)})
 ```
 
-## Screenshot
+### Screenshot
 
 ![Screenshot of the rendered demo code](render-code.png)
