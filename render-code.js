@@ -168,12 +168,16 @@ module.exports = library.export(
     var stylesheet = element.stylesheet([
       element.style(".editable-container",{
         "min-width": "16em",
-        "max-width": "22em",
+        "max-width": "24em",
         "min-height": "4em",
-      }),
+        "border": "3px solid #e5eeff",
+        "box-siding": "border-box",
+        "border-radius": "8px",
+        "padding": "5px",
+        }),
 
       element.style(".editable",{
-        "padding": "0.5em 0 0.5em 3.25em",
+        "padding": "0.5em 0.5em 0.5em 3.25em",
       }),
 
       element.style(".editable sym, .editable sym.text, sym.array, .editable txt", {
