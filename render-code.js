@@ -205,8 +205,8 @@ module.exports = library.export(
 
     var SYM_PADDING = "8px"
     var LOGO_COLOR = "red"
-    var SYM_BACKGROUND = "#e5eeff"
-    var LIGHT_SYM = "#f6f6ff"
+    var SYM_BACKGROUND = "#dbe3f1"
+    var LIGHT_SYM = "#e5eeff"
     var DARK_SYM = "#c6d4ef"
 
     var stylesheet = element.stylesheet([
@@ -214,7 +214,7 @@ module.exports = library.export(
         "min-width": "15em",
         "max-width": "25em",
         "min-height": "5em",
-        "border": "3px solid #e5eeff",
+        "border": "3px solid "+LIGHT_SYM,
         "box-siding": "border-box",
         "border-radius": "8px",
         "padding": "5px",
