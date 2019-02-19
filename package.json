@@ -5,7 +5,7 @@
   "main": "render-code",
   "dependencies": {
     "module-library": "*",
-    "parse-a-little-js": "^0.25.0"
+    "parse-a-little-js": "^0.26.0"
   },
   "devDependencies": {
     "web-site": "*",
