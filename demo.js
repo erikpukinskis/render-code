@@ -19,7 +19,8 @@ library.using([
       "      3433,{",
       "      \"go\":\"go go\"},",
       "      browserBridge(",
-      "        ).forResponse(",
+      "        )",
+      "        .forResponse(",
       "          response))})",
       "  // ezjs",
     ]
