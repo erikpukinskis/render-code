@@ -107,6 +107,13 @@ module.exports = library.export(
 
       while(segments) {
 
+        if (!segments.intros && !segments.secondHalf && !segments.separators && segments.outros && segments.outros[0] == ")") {
+          // If we're on a line with no argument, add an empty symbol
+          contents.push(
+            renderSym(
+              stack,
+              "*"))}
+
         if (segments.intros) {
           contents = contents.concat(segments.intros.map(
             renderSymbol))}
@@ -114,7 +121,14 @@ module.exports = library.export(
         if (segments.firstHalf) {
           contents.push(
             renderTxt(
-              segments.firstHalf))}
+              segments.firstHalf))
+
+        } else if (isFunctionLiteral) {
+          // If we're in a function literal with no first half, add an empty symbol
+          contents.push(
+            renderSym(
+              stack,
+              "*"))}
 
         if (segments.separators) {
           contents = contents.concat(segments.separators.map(renderSymbol))}
