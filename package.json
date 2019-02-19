@@ -4,6 +4,9 @@
   "description": "Show simple JavaScript as HTML DIVs",
   "dependencies": {
     "module-library": "*",
+    "parse-a-little-js": "^0.24.0"
+  },
+  "devDependencies": {
     "web-site": "*",
     "browser-bridge": "*"
   },

@@ -6,8 +6,8 @@ module.exports = library.export(
   // Takes a bunch of text, parses it out
   // fairly simply, and draws elements
 
-  ["web-element"],
-  function(element) {
+  ["web-element", "parse-a-little-js"],
+  function(element, parseALittle) {
 
     function renderCode(bridge, lines, editLoop) {
 
@@ -16,12 +16,11 @@ module.exports = library.export(
 
       prepareBridge(bridge)
 
-      var allowObjects = lines[0] == "dogs.do("
       var stack = []
-
 
       var lines = lines.map(
         function(line) {
+          var segments = parseALittle(line)
 
           var spaces = line.match(/^ */)[0]
           var nonbreakingSpaces = "<indent>"+spaces.split("").map(function() { return "&nbsp;"}).join("")+"</indent>"
@@ -34,11 +33,10 @@ module.exports = library.export(
               "line"),
             nonbreakingSpaces,
             lineContents(
-              stack,
-              allowObjects,
-              editLoop,
               bridge,
-              line))
+              segments,
+              stack,
+              editLoop))
 
           if (line.match(/^\s*\/\//)) {
             el.addSelector(".comment")
@@ -66,66 +64,76 @@ module.exports = library.export(
           program))
     }
 
-    function lineContents(stack, allowObjects, editLoop, bridge, line) {
+    function lineContents(bridge, segments, stack, editLoop) {
 
-      var symbol
-      var text
-      var sym
-      var txt
-      var html = ""
+      var contents = []
 
-      function biteSymbol() {
-        var symbolText = grabSymbol(line)
-        if (symbolText == "//") {
-          debugger
+      var allSymbols = [].concat(
+        segments.intros || [],
+        segments.separators || [],
+        segments.outros || [])
+
+      allSymbols.forEach(function(sym) {
+        if (["[", "{"].includes(sym)) {
+          stack.push(sym)
         }
-        if (symbolText) {
-          line = line.slice(symbolText.length)
-          return symbolText
-        }
+
+        if (["}", "]"].includes(sym)) {
+          stack.pop()
+        }        
+      })
+
+      var renSym = renderSym.bind(null, stack)
+
+      while(segments) {
+
+        if (segments.intros) {
+          contents = contents.concat(segments.intros.map(
+            renSym))}
+
+        if (segments.firstHalf) {
+          contents.push(
+            renderTxt(
+              segments.firstHalf))}
+
+        if (segments.separators) {
+          contents = contents.concat(segments.separators.map(renSym))}
+
+        if (segments.secondHalf) {
+          contents.push(
+            renderTxt(
+              segments.secondHalf))}
+
+        if (segments.outros) {
+          contents = contents.concat(segments.outros.map(
+            renSym))}
+
+        segments = segments.remainder && parseALittle(
+          segments.remainder)
       }
 
-      function biteText() {
-        if (grabSymbol(line)) {
-          return
-        }
-        if (line.length > 0) {
-          var text = line.match(/^[^"}{)(=]*/)[0]
-          line = line.slice(text.length)
-          return text
-        }
-      }
-
-      var lastSym
-      while((sym = biteSymbol()) || (txt = biteText())) {
-        lastSym = sym || lastSym
-
-        if (sym == "ezjs") {
-          html += "<sym contenteditable=\"true\" spellcheck=\"false\" class=\"logo\">ezjs</sym>"
-        } else if (sym == "*") {
-          html += "<empty contenteditable=\"true\"> </empty>"
-        } else if (sym) {
-          if (["[", "{"].includes(sym)) {
-            stack.push(sym)
-          }
-
-          html += "<sym class=\""+literalClass(stack, sym, allowObjects)+"\">"+sym+"</sym>"
-
-          if (["}", "]"].includes(sym)) {
-            stack.pop()
-          }
-
-        } else if (txt) {
-          var isLogo = txt == " ezjs"
-          var spelling = isLogo ? " spellcheck=\"false\"" : ""
-          html += "<txt"+spelling+">"+txt+"</txt>"
-        }
-      }
-
-      return html
+      return contents.join("")
     }
 
-    function literalClass(stack, sym, allowObjects) {
+    function renderSym(stack, sym) {
+      if (sym == "ezjs") {
+        return "<sym contenteditable=\"true\" spellcheck=\"false\" class=\"logo\">ezjs</sym>"
+
+      } else if (sym == "*") {
+        return "<empty contenteditable=\"true\"> </empty>"
+
+      } else if (sym) {
+        return "<sym class=\""+literalClass(stack, sym)+"\">"+sym+"</sym>"
+      }
+    }
+
+    function renderTxt(text) {
+      var isLogo = text == " ezjs"
+      var spelling = isLogo ? " spellcheck=\"false\"" : ""
+      return "<txt"+spelling+">"+text+"</txt>"      
+    }
+
+    function literalClass(stack, sym) {
       if (sym.length > 1) {
         var classes = "text "
       } else {
@@ -137,28 +145,15 @@ module.exports = library.export(
       }
 
       var top = stack[stack.length-1]
-      var b = Math.max(255,stack.length*25);
+      var b = Math.max(255,stack.length*25)
+      var isObject = false
 
       if (top == "[") {
         return classes+"array";
-      } else if (stack.length == 2 && allowObjects) {
+      } else if (isObject) {
         return classes+"object";
       } else {
         return classes
-      }
-    }
-
-    function grabSymbol(line) {
-      if (line == ",") {
-        return ","
-      }
-      var parts = line.match(/^(function|var|new|ezjs|\/\/)/)
-      if (parts) {
-        return parts[0]
-      }
-      var firstCharacter = line[0]
-      if (["*", "\"", "{", "}", "(", ")", "[", "]", "=", ":", ".", ","].includes(firstCharacter)) {
-        return firstCharacter
       }
     }
 
