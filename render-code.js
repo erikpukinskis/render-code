@@ -2,10 +2,6 @@ var library = require("module-library")(require)
 
 module.exports = library.export(
   "render-code",
-
-  // Takes a bunch of text, parses it out
-  // fairly simply, and draws elements
-
   ["web-element", "parse-a-little-js"],
   function(element, parseALittle) {
 

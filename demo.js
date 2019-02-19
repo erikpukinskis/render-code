@@ -1,7 +1,7 @@
 var library = require("module-library")(require)
 
 library.using([
-  "./render-code",
+  ".",
   "web-site",
   "browser-bridge"],
   function(renderCode, WebSite, BrowserBridge) {
