@@ -18,9 +18,14 @@ module.exports = library.export(
         lines = lines.toString().split("\n")
       }
 
-      var lineElements = lines.map(
+      var lineElements = []
+
+      lines.forEach(
         function(line) {
           var segments = parseALittle(line)
+
+          if (!segments) {
+            return }
 
           var spaces = line.match(/^ */)[0]
           var nonbreakingSpaces = "<indent>"+spaces.split("").map(function() { return "&nbsp;"}).join("")+"</indent>"
@@ -45,7 +50,8 @@ module.exports = library.export(
             el.addSelector(".logo")
             // el.addAttribute("contenteditable", "false")
           }
-          return el
+
+          lineElements.push(el)
         }
       )
 
