@@ -223,6 +223,7 @@ module.exports = library.export(
     var LOGO_COLOR = "red"
     var SYM_BACKGROUND = "#dbe3f1"
     var LIGHT_SYM = "#e5eeff"
+    var ULTRALIGHT_SYM = "#f6f6ff"
     var DARK_SYM = "#c6d4ef"
 
     var stylesheet = element.stylesheet([
@@ -256,11 +257,11 @@ module.exports = library.export(
         "display": "inline",
         "margin": "0 0.15em",
 
-        "border-left": SYM_PADDING+" solid "+LIGHT_SYM,
-        "border-right": SYM_PADDING+" solid "+LIGHT_SYM,
+        "border-left": SYM_PADDING+" solid "+ULTRALIGHT_SYM,
+        "border-right": SYM_PADDING+" solid "+ULTRALIGHT_SYM,
         "text-align": "center",
         "font-weight": "bold",
-        "background-color": LIGHT_SYM,
+        "background-color": ULTRALIGHT_SYM,
         "color": "#7c7cfa",
         "border-radius": "0.2em",
       }),
