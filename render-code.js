@@ -61,6 +61,23 @@ module.exports = library.export(
         }
       )
 
+      var logo = element(
+        element.tag("line"),
+        ".comment.logo",
+        element(
+          element.tag("indent"),
+          "&nbsp;&nbsp;"),
+        element(
+          element.tag("sym"),
+          ".text.comment",
+          "//"),
+        element(
+          element.tag("txt"),{
+          "spellcheck": "false"},
+          " ezjs"))
+
+      lineElements.push(logo)
+
       var handleEdits = editLoop.withArgs(
         bridge.event)
         .evalable()

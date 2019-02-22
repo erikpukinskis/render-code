@@ -22,7 +22,6 @@ library.using([
       "        )",
       "        .forResponse(",
       "          response))})",
-      "  // ezjs",
     ]
 
     // var backlog = [
@@ -64,7 +63,6 @@ library.using([
     //   "            response)",
     //   "        bridge.send(",
     //   "          page)})})",
-    //   "          ezjs",
     // ]
 
     var empty = ["*"]

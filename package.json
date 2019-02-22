@@ -8,8 +8,8 @@
     "parse-a-little-js": "^0.26.0"
   },
   "devDependencies": {
-    "web-site": "*",
-    "browser-bridge": "*"
+    "browser-bridge": "^0.161.0",
+    "web-site": "*"
   },
   "repository": {
     "type": "git",
