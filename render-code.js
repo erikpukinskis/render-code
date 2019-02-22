@@ -7,15 +7,21 @@ module.exports = library.export(
 
     function renderCode(bridge, lines, editLoop) {
 
-      if (!editLoop) {
-        editLoop = bridge.defineFunction(function noop(){})}
-
       prepareBridge(bridge)
+
+      if (!editLoop) {
+        editLoop = bridge.noop()}
 
       var stack = []
 
       if (typeof lines == "function") {
-        lines = lines.toString().split("\n")
+        var source = lines.toString()
+
+        source = source.replace(/^function\s*\w*\s*\([^)]*\)\s\{/, "")
+
+        source = source.replace(/\}\s*$/, "")
+
+        lines = source.split("\n")
       }
 
       var lineElements = []
@@ -334,9 +340,9 @@ module.exports = library.export(
     ])
 
     function prepareBridge(bridge) {
-      if (!bridge.remember("write-code")) {
+      if (!bridge.remember("render-code")) {
         bridge.addToHead(stylesheet)
-        bridge.remember("write-code")
+        bridge.see("render-code", true)
       }
     }
 
