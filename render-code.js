@@ -5,6 +5,11 @@ module.exports = library.export(
   ["web-element", "parse-a-little-js"],
   function(element, parseALittle) {
 
+    function backlog() {}
+
+    backlog([
+      "strings should be indented according to the spaces. RN it's just set to work at one level I think"])
+
     function renderCode(bridge, lines, editLoop) {
 
       prepareBridge(bridge)
