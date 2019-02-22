@@ -14,7 +14,11 @@ module.exports = library.export(
 
       var stack = []
 
-      var lines = lines.map(
+      if (typeof lines == "function") {
+        lines = lines.toString().split("\n")
+      }
+
+      var lineElements = lines.map(
         function(line) {
           var segments = parseALittle(line)
 
@@ -53,7 +57,7 @@ module.exports = library.export(
         ".editable",{
         "contenteditable": "true",
         "onkeyup": handleEdits},
-        lines)
+        lineElements)
 
       bridge.send(
         element(".editable-container",
