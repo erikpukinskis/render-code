@@ -27,7 +27,7 @@ module.exports = library.export(
         source = source.replace(/\}\s*$/, "")
 
         lines = source.split("\n")
-      } else if (typeof lines == "String") {
+      } else if (typeof lines == "string") {
         lines = lines.split("\n")
       }
 
@@ -259,6 +259,7 @@ module.exports = library.export(
         "box-sizing": "border-box",
         "border-radius": "8px",
         "padding": "5px",
+        "background": "rgba(255,255,255,0.9)",
         }),
 
       element.style(".editable",{
