@@ -16,7 +16,7 @@ module.exports = library.export(
       b: "white gray blue",
       c: "yellow white gray",
       d: "gray white",
-      e: "yellow white gray, red",
+      e: "yellow white gray red",
       f: "pink brown",
       g: "green brown gray",
       h: "gray brown",
@@ -33,11 +33,11 @@ module.exports = library.export(
       s: "yellow white",
       t: "black green",
       u: "yellow blue gray",
-      v: "",
-      w: "",
-      x: "",
-      y: "",
-      z: "",
+      v: "gray blue purple",
+      w: "black brown green gray",
+      x: "gray brown red yellow",
+      y: "yellow gray",
+      z: "red brown green yellow",
     }
 
     var hexColor = {
@@ -60,6 +60,19 @@ module.exports = library.export(
       n: ["#71A359", "#BE6F73"],
       o: ["#FCEFEF", "#EC7571"],
       p: ["#828C80", "#64984E"],
+
+      q: ["#77AB23", "#FCF63B"],
+      r: ["#502322", "#E9463C"],
+      s: ["#b0deb6", "#e0e628"],
+      t: ["#1E231C", "#5B7F4E"],
+
+      u: ["#8873AF", "#EDE9DF"],
+      v: ["#7E47A3", "#C6CBE7"],
+      w: ["#595830", "#A53434"],
+      x: ["#A85057","#C2BEBF"],
+
+      y: ["#A3A298", "#FFFA9D"],
+      z: ["#9F473F", "#D24440"],
     }
 
     var swatchStyles = element.stylesheet([
@@ -101,8 +114,6 @@ module.exports = library.export(
       var content = []
       for(var letter in colorOf) {
         var colors = colorOf[letter].split(" ")
-
-        debugger
 
         if (hexColor[letter]) {
           var colorBars = element(
@@ -191,6 +202,12 @@ module.exports = library.export(
 
           var isComment = line.match(/^\s*\/\//)
 
+          if (isHash) {
+            var letter = segments.secondHalf && segments.secondHalf[1].toLowerCase()
+            var foreground = hexColor[letter] ? hexColor[letter][0] : hexColor.y[0]
+            var background = hexColor[letter] ? hexColor[letter][1] : hexColor.y[1]
+          }
+
           var el = element(
             element.tag(
               "line"),
@@ -199,7 +216,9 @@ module.exports = library.export(
               bridge,
               segments,
               stack,
-              editLoop))
+              editLoop,
+              background,
+              foreground))
 
           if (isHash) {
             el.addSelector(".tag")
@@ -245,7 +264,7 @@ module.exports = library.export(
           program))
     }
 
-    function lineContents(bridge, segments, stack, editLoop) {
+    function lineContents(bridge, segments, stack, editLoop, background, foreground) {
 
       var contents = []
 
@@ -321,7 +340,7 @@ module.exports = library.export(
         if (segments.secondHalf) {
           contents.push(
             renderTxt(
-              segments.secondHalf))}
+              segments.secondHalf, background, foreground))}
 
         if (segments.outros) {
           contents = contents.concat(
@@ -349,10 +368,14 @@ module.exports = library.export(
       }
     }
 
-    function renderTxt(text) {
-      var isLogo = text == " ezjs"
-      var spelling = isLogo ? " spellcheck=\"false\"" : ""
-      return "<txt"+spelling+">"+text+"</txt>"      
+    function renderTxt(text, background, foreground) {
+      var el = element(element.tag("txt"), text)
+      el.appendStyles({
+        "background": background,
+        "border-left": SYM_PADDING+" solid "+background,
+        "border-right": SYM_PADDING+" solid "+background,
+        "color": foreground})
+      return el.html()
     }
 
     function literalClass(stack, sym) {

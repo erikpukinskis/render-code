@@ -17,7 +17,16 @@ library.using([
       "      )",
       "    dogs.start(",
       "      3433,",
-      "      \"#accepted\",{",
+      "      \"#before holiday\",",
+      "      \"#foretold\",",
+      "      \"#ROI\",",
+      "      \"#asmr\",",
+      "      \"#watercolor\",",
+      "      \"#corgis\",",
+      "      \"#solid\",",
+      "      \"#queer\",",
+      "      \"#underwater ballet\",",
+      "      \"#verocious\",{",
       "      \"go\":\"go go\"},",
       "      browserBridge(",
       "        )",
@@ -77,13 +86,13 @@ library.using([
       function(request, response) {
         var bridge = new BrowserBridge().forResponse(response)
 
-        var swatches = bridge.partial()
         var code = bridge.partial()
-
         renderCode(code, stylesheet)
-        renderCode.colorSwatches(swatches)
 
-        bridge.send([swatches, code])
+        // var swatches = bridge.partial()
+        // renderCode.colorSwatches(swatches)
+
+        bridge.send([code])
       }
     )
 
