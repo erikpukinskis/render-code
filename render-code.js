@@ -359,9 +359,9 @@ module.exports = library.export(
       }),
 
       element.style("body", {
-        "padding-left": "6em",
-        "padding-top": "8em",
-        "padding-bottom": "6em",
+        "padding-left": "5vw",
+        "padding-top": "10vw",
+        "padding-bottom": "10vw",
       })
     ])
 
