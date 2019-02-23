@@ -456,6 +456,7 @@ module.exports = library.export(
           "border-right": SYM_PADDING+" solid "+TAG_RED,
           "text-transform": "uppercase",
           "font-style": "italic",
+          "vertical-align": "middle",
         },
 
         " sym.quote": {
