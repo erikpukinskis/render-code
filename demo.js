@@ -77,7 +77,13 @@ library.using([
       function(request, response) {
         var bridge = new BrowserBridge().forResponse(response)
 
-        renderCode(bridge, stylesheet)
+        var swatches = bridge.partial()
+        var code = bridge.partial()
+
+        renderCode(code, stylesheet)
+        renderCode.colorSwatches(swatches)
+
+        bridge.send([swatches, code])
       }
     )
 

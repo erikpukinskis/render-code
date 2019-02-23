@@ -10,6 +10,136 @@ module.exports = library.export(
     backlog([
       "strings should be indented according to the spaces. RN it's just set to work at one level I think"])
 
+
+    var colorOf = {
+      a: "red brown",
+      b: "white gray blue",
+      c: "yellow white gray",
+      d: "gray white",
+      e: "yellow white gray, red",
+      f: "pink brown",
+      g: "green brown gray",
+      h: "gray brown",
+      i: "black white yellow blue",
+      j: "red yellow",
+      k: "gray black blue",
+      l: "yellow gray",
+      m: "blue red brown",
+      n: "green brown",
+      o: "white red",
+      p: "gray green",
+      q: "yellow green",
+      r: "red black",
+      s: "yellow white",
+      t: "black green",
+      u: "yellow blue gray",
+      v: "",
+      w: "",
+      x: "",
+      y: "",
+      z: "",
+    }
+
+    var hexColor = {
+      a: ["#D44542", "#F5C5BF"],
+      b: ["#ADA9D1", "#E5E5E5"],
+      c: ["#FFFA9D", "#A3A298"],
+      d: ["#999999", "#F8F7F7"],
+
+      e: ["#F09687", "#FFFCC9"],
+      f: ["#B6474F", "#F6CFD7"],
+      g: ["#576F2B", "#C7A6A1"],
+      h: ["#939393", "#D3A3A9"],
+
+      i: ["#4A4A4A", "#E4E089"],
+      j: ["#FDF441", "#EA473D"],
+      k: ["#3C3A4E", "#BBBBBB"],
+      l: ["#CCDC64", "#FEF9A0"],
+
+      m: ["#C643A7", "#D8A8B0"],
+      n: ["#71A359", "#BE6F73"],
+      o: ["#FCEFEF", "#EC7571"],
+      p: ["#828C80", "#64984E"],
+    }
+
+    var swatchStyles = element.stylesheet([
+      element.style(
+        ".bar",{
+          "content": "x",
+          "height": "2em",
+          "flex": "1"}),
+
+      element.style(
+        ".letter",{
+        "width": "0",
+        "position": "relative",
+        "left": "-50%",
+        "font-size": "2em",
+        "font-family": "sans-serif",
+        "font-style": "italic",
+        "flex-grow": "0"}),
+
+      element.style(
+        ".swatch",{
+        "width": "100px",
+        "display": "flex",
+        "flex-direction": "row",
+        "margin": "0 40px 20px 0"}),
+
+      element.style(
+        ".swatch-wrap",{
+        "display": "inline-block"}),
+
+    ])
+
+    function colorSwatches(bridge) {
+      if (!bridge.remember("render-code/color-swatches")) {
+        bridge.addToHead(swatchStyles)
+        bridge.see("render-code/color-swatches", true)
+      }
+
+      var content = []
+      for(var letter in colorOf) {
+        var colors = colorOf[letter].split(" ")
+
+        debugger
+
+        if (hexColor[letter]) {
+          var colorBars = element(
+            ".bar",
+            element.style({
+              "background": hexColor[letter][0]}))
+
+          var foregroundColor = hexColor[letter][1]
+
+        } else {
+          var foregroundColor = colors[0]
+
+          var colorBars = colors.map(function(color) {
+            return element(
+              ".bar",
+              element.style({
+                "background": color}))
+            })}
+
+
+        var letterEl = element(
+          ".letter",
+          element.style({
+              "color": foregroundColor}),
+          letter.toUpperCase())
+
+        var swatch = element(
+          "."+letter+"-swatch.swatch", colorBars, letterEl)
+
+        content.push(element(".swatch-wrap", swatch))
+      }
+
+      bridge.send(content)
+    }
+
+    renderCode.colorSwatches = colorSwatches
+
     function renderCode(bridge, lines, options) {
 
       prepareBridge(bridge)
