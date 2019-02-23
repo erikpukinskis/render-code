@@ -194,8 +194,11 @@ module.exports = library.export(
               segments.secondHalf))}
 
         if (segments.outros) {
-          contents = contents.concat(segments.outros.map(
-            renderSymbol))}
+          contents = contents.concat(
+            ["<closers>"],
+            segments.outros.map(
+            renderSymbol),
+            ["</closers>"])}
 
         segments = segments.remainder && parseALittle(
           segments.remainder)
@@ -228,7 +231,7 @@ module.exports = library.export(
       }
 
       if (sym.length > 1) {
-        var classes = "text "
+        var classes = "text"
       } else {
         var classes = ""
       }
@@ -237,12 +240,16 @@ module.exports = library.export(
         return classes + " comment"
       }
 
+      if (sym == "\"") {
+        classes += " quote"
+      }
+
       var top = stack[stack.length-1]
 
       if (top == "array literal") {
-        return classes+"array";
+        return classes+" array";
       } else if (top == "object literal") {
-        return classes+"object";
+        return classes+" object";
       } else {
         return classes
       }
@@ -298,7 +305,7 @@ module.exports = library.export(
           "font-style": "italic",
         },
 
-        " sym:not(.hash)": {
+        " sym.quote": {
           "display": "none"},
       }),
 
