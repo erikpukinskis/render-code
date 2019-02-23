@@ -54,6 +54,13 @@ module.exports = library.export(
           line = line.slice(spaces.length)
           var width = spaces.length/1.5+"em"
 
+
+          var isString = segments.intros && segments.intros[0] == "\"" && segments.intros.length == 1 && segments.outros && segments.outros[0] == "\""
+
+          var isHash = isString && segments.secondHalf[0] == "#"
+
+          var isComment = line.match(/^\s*\/\//)
+
           var el = element(
             element.tag(
               "line"),
@@ -64,7 +71,9 @@ module.exports = library.export(
               stack,
               editLoop))
 
-          if (line.match(/^\s*\/\//)) {
+          if (isHash) {
+            el.addSelector(".tag")
+          } else if (isComment) {
             el.addSelector(".comment")
           }
 
@@ -214,6 +223,10 @@ module.exports = library.export(
     }
 
     function literalClass(stack, sym) {
+      if (sym == "#") {
+        return "hash"
+      }
+
       if (sym.length > 1) {
         var classes = "text "
       } else {
@@ -255,6 +268,8 @@ module.exports = library.export(
     var LIGHT_SYM = "#e5eeff"
     var ULTRALIGHT_SYM = "#f6f6ff"
     var DARK_SYM = "#c6d4ef"
+    var TAG_RED = "#5fe0a4"
+    var TAG_TEXT = "white"
 
     var stylesheet = element.stylesheet([
       element.style(".editable-container",{
@@ -270,6 +285,21 @@ module.exports = library.export(
 
       element.style(".editable",{
         "padding": "0.5em 0.5em 0.5em 3.25em",
+      }),
+
+      element.style(".tag",{
+        " txt": {
+          "background": TAG_RED,
+          "color": TAG_TEXT,
+          "border-radius": "10em",
+          "border-left": SYM_PADDING+" solid "+TAG_RED,
+          "border-right": SYM_PADDING+" solid "+TAG_RED,
+          "text-transform": "uppercase",
+          "font-style": "italic",
+        },
+
+        " sym:not(.hash)": {
+          "display": "none"},
       }),
 
       element.style(".editable sym, .editable sym.text, sym.array, .editable txt", {
@@ -311,7 +341,6 @@ module.exports = library.export(
         "background": "#fbb",
         "border-left": SYM_PADDING+" solid #fbb",
         "border-right": SYM_PADDING+" solid #fbb",
-        "padding": "0 5px 0 8px",
         "letter-spacing": "3px",
       }),
 
