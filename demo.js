@@ -26,7 +26,9 @@ library.using([
       "      \"#solid\",",
       "      \"#queer\",",
       "      \"#underwater ballet\",",
-      "      \"#verocious\",{",
+      "      \"#verocious\",",
+      "      \"#monument valley\",",
+      "      \"#knock-out\",{",
       "      \"go\":\"go go\"},",
       "      browserBridge(",
       "        )",
@@ -89,10 +91,10 @@ library.using([
         var code = bridge.partial()
         renderCode(code, stylesheet)
 
-        // var swatches = bridge.partial()
-        // renderCode.colorSwatches(swatches)
+        var swatches = bridge.partial()
+        renderCode.colorSwatches(swatches)
 
-        bridge.send([code])
+        bridge.send([code, swatches])
       }
     )
 

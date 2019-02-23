@@ -41,8 +41,8 @@ module.exports = library.export(
     }
 
     var hexColor = {
-      a: ["#D44542", "#F5C5BF"],
-      b: ["#ADA9D1", "#E5E5E5"],
+      a: ["#F5C5BF", "#D44542"],
+      b: ["#E5E5E5", "#ADA9D1"],
       c: ["#FFFA9D", "#A3A298"],
       d: ["#999999", "#F8F7F7"],
 
@@ -63,12 +63,12 @@ module.exports = library.export(
 
       q: ["#77AB23", "#FCF63B"],
       r: ["#502322", "#E9463C"],
-      s: ["#b0deb6", "#e0e628"],
+      s: ["#e0e628", "#b0deb6"],
       t: ["#1E231C", "#5B7F4E"],
 
-      u: ["#8873AF", "#EDE9DF"],
-      v: ["#7E47A3", "#C6CBE7"],
-      w: ["#595830", "#A53434"],
+      u: ["#EDE9DF", "#8873AF"],
+      v: ["#C6CBE7", "#7E47A3"],
+      w: ["#A53434", "#595830"],
       x: ["#A85057","#C2BEBF"],
 
       y: ["#A3A298", "#FFFA9D"],
@@ -146,7 +146,8 @@ module.exports = library.export(
         content.push(element(".swatch-wrap", swatch))
       }
 
-      bridge.send(content)
+      bridge.send(element(
+        element.style({"margin-top": "2em"}), content))
     }
 
     renderCode.colorSwatches = colorSwatches
@@ -456,6 +457,7 @@ module.exports = library.export(
           "border-right": SYM_PADDING+" solid "+TAG_RED,
           "text-transform": "uppercase",
           "font-style": "italic",
+          "font-weight": "bold",
           "vertical-align": "middle",
         },
 
@@ -481,6 +483,7 @@ module.exports = library.export(
 
         "border-left": SYM_PADDING+" solid "+ULTRALIGHT_SYM,
         "border-right": SYM_PADDING+" solid "+ULTRALIGHT_SYM,
+        "border-bottom": "0.15em solid "+ULTRALIGHT_SYM,
         "text-align": "center",
         "font-weight": "bold",
         "background-color": ULTRALIGHT_SYM,
