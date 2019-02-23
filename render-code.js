@@ -540,6 +540,7 @@ module.exports = library.export(
         "color": "#635d5a",
         "-webkit-font-smoothing": "antialiased",
         "display": "inline",
+        "border-right": "5px solid white",
       }),
 
       element.style("line", {
