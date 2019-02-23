@@ -27,6 +27,8 @@ module.exports = library.export(
         source = source.replace(/\}\s*$/, "")
 
         lines = source.split("\n")
+      } else if (typeof lines == "String") {
+        lines = lines.split("\n")
       }
 
       var lineElements = []
