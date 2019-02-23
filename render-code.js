@@ -505,6 +505,7 @@ module.exports = library.export(
         "background": "#fbb",
         "border-left": SYM_PADDING+" solid #fbb",
         "border-right": SYM_PADDING+" solid #fbb",
+        "border-bottom": "none",
         "letter-spacing": "3px",
       }),
 
@@ -549,11 +550,9 @@ module.exports = library.export(
       element.style("line", {
         "display": "block",
         "flex-direction": "row",
-
         "margin-bottom": "0.4em",
         "text-indent": "-2.15em",
-        "line-height": "1.2em",
-
+        "line-height": "1.4em",
         "font-family": "sans-serif",
         "font-size": "1.3em",
       }),
