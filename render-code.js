@@ -10,13 +10,21 @@ module.exports = library.export(
     backlog([
       "strings should be indented according to the spaces. RN it's just set to work at one level I think"])
 
-    function renderCode(bridge, lines, editLoop) {
+    function renderCode(bridge, lines, options) {
 
       prepareBridge(bridge)
 
-      if (!editLoop) {
-        editLoop = bridge.noop()}
+      if (options && options.editLoop) {
+        var editLoop = options.editLoop
+      } else {
+        var editLoop = bridge.noop()}
 
+      if (options && options.noLogo) {
+        var yesLogo = false
+      } else {
+        var yesLogo = true
+      }
+      
       var stack = []
 
       if (typeof lines == "function") {
@@ -59,10 +67,6 @@ module.exports = library.export(
           if (line.match(/^\s*\/\//)) {
             el.addSelector(".comment")
           }
-          if (line.match(/\/\/ ezjs/)) {
-            el.addSelector(".logo")
-            // el.addAttribute("contenteditable", "false")
-          }
 
           lineElements.push(el)
         }
@@ -83,7 +87,9 @@ module.exports = library.export(
           "spellcheck": "false"},
           " ezjs"))
 
-      lineElements.push(logo)
+      if (yesLogo) {
+        lineElements.push(
+          logo)}
 
       var handleEdits = editLoop.withArgs(
         bridge.event)
