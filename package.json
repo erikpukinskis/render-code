@@ -1,6 +1,6 @@
 {
   "name": "render-code",
-  "version": "0.25.0",
+  "version": "0.26.0",
   "description": "Show simple JavaScript as HTML DIVs",
   "main": "render-code",
   "dependencies": {
