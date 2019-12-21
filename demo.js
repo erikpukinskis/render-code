@@ -6,34 +6,63 @@ library.using([
   "browser-bridge"],
   function(renderCode, WebSite, BrowserBridge) {
 
+    var math = [
+      "doStuffWithNumbers(",
+      "  function(sum) {",
+      "    var foo = [",
+      "      4000,",
+      "      4001,",
+      "      400,",
+      "      4002]",
+      "    sum(",
+      "      foo)})",
+    ]
+
     var stylesheet = [
-      "dogs.do(",
-      "  \"laugh\",[",
-      "  \"one\",",
-      "  \"two. two Two they function they drop a line or two\"],",
-      "  // wasn't that a long string?",
-      "  function (this, that, theOther) {",
-      "    var bone = new Treat(",
-      "      )",
-      "    dogs.start(",
-      "      3433,",
-      "      \"#before holiday\",",
-      "      \"#foretold\",",
-      "      \"#ROI\",",
-      "      \"#asmr\",",
-      "      \"#watercolor\",",
-      "      \"#corgis\",",
-      "      \"#solid\",",
-      "      \"#queer\",",
-      "      \"#underwater ballet\",",
-      "      \"#verocious\",",
-      "      \"#monument valley\",",
-      "      \"#knock-out\",{",
-      "      \"go\":\"go go\"},",
-      "      browserBridge(",
-      "        )",
-      "        .forResponse(",
-      "          response))})",
+      // "library.define(",
+      // "  \"hello world\",[",
+      // "  \"web-site\",",
+      // "  \"web-element\",",
+      // "  \"browser-bridge\"],",
+      // "  function*(WebSite, element, BrowserBridge) {",
+      // "    var site =newWebSite(",
+      // "      *)",
+      // "    site.start(",
+      // "      3444)",
+      // "    var page = element(",
+      // "      \"hello world\")",
+      // "    site.addRoute(",
+      // "      \"get\",",
+      // "      \"/\",",
+      // "      function*(_, response) {",
+      // "        var bridge =newBrowserBridge(",
+      // "          ).forResponse(",
+      // "            response)",
+      // "        bridge.send(",
+      // "          page)",
+      // "      })})",
+      // "dogs.do(",
+      // "  \"laugh\",[",
+      // "  \"one\",",
+      // "  \"two. two Two they function they drop a line or two\"],",
+      // "  // wasn't that a long string?",
+      // "  function (this, that, theOther) {",
+      // "    var bone = new Treat(",
+      // "      )",
+      // "    dogs.start(",
+      // "      \"#before holiday\",",
+      // "      \"#foretold\",",
+      // "      \"#ROI\",",
+      // "      \"#asmr\",",
+      // "      \"#watercolor\",",
+      // "      \"#corgis\",",
+      // "      \"#solid\",",
+      // "      \"#queer\",",
+      // "      \"#underwater ballet\",",
+      // "      \"#verocious\",",
+      // "      \"#monument valley\",",
+      // "      \"#knock-out\",{",
+      // "      \"go\":\"go go\"})})",
     ]
 
     // var backlog = [
@@ -53,29 +82,29 @@ library.using([
     // ]
 
 
-    // var basicSite = [
-    //   "library.define(",
-    //   "  \"hello world\",[",
-    //   "  \"web-site\",",
-    //   "  \"web-element\",",
-    //   "  \"browser-bridge\"],",
-    //   "  function*(WebSite, element, BrowserBridge) {",
-    //   "    var site =newWebSite(",
-    //   "      *)",
-    //   "    site.start(",
-    //   "      3444)",
-    //   "    var page = element(",
-    //   "      \"hello world\")",
-    //   "    site.addRoute(",
-    //   "      \"get\",",
-    //   "      \"/\",",
-    //   "      function*(_, response) {",
-    //   "        var bridge =newBrowserBridge(",
-    //   "          ).forResponse(",
-    //   "            response)",
-    //   "        bridge.send(",
-    //   "          page)})})",
-    // ]
+    var basicSite = [
+      "library.define(",
+      "  \"hello world\",[",
+      "  \"web-site\",",
+      "  \"web-element\",",
+      "  \"browser-bridge\"],",
+      "  function*(WebSite, element, BrowserBridge) {",
+      "    var site =newWebSite(",
+      "      *)",
+      "    site.start(",
+      "      3444)",
+      "    var page = element(",
+      "      \"hello world\")",
+      "    site.addRoute(",
+      "      \"get\",",
+      "      \"/\",",
+      "      function*(_, response) {",
+      "        var bridge =newBrowserBridge(",
+      "          ).forResponse(",
+      "            response)",
+      "        bridge.send(",
+      "          page)})})",
+    ]
 
     var empty = ["*"]
 
@@ -89,12 +118,16 @@ library.using([
         var bridge = new BrowserBridge().forResponse(response)
 
         var code = bridge.partial()
-        renderCode(code, stylesheet)
+        renderCode(code, math)
 
-        var swatches = bridge.partial()
-        renderCode.colorSwatches(swatches)
+        // var code2 = bridge.partial()
+        // renderCode(code2, basicSite)
 
-        bridge.send([code, swatches])
+
+        // var swatches = bridge.partial()
+        // renderCode.colorSwatches(swatches)
+
+        bridge.send([code])
       }
     )
 

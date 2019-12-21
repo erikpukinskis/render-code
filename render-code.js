@@ -42,12 +42,12 @@ module.exports = library.export(
 
     var hexColor = {
       a: ["#F5C5BF", "#D44542"],
-      b: ["#E5E5E5", "#ADA9D1"],
+      b: ["#E5E5E5", "#9b88c7"],
       c: ["#FFFA9D", "#A3A298"],
       d: ["#999999", "#F8F7F7"],
 
       e: ["#F09687", "#FFFCC9"],
-      f: ["#B6474F", "#F6CFD7"],
+      f: ["#d47279", "#F6CFD7"],
       g: ["#576F2B", "#C7A6A1"],
       h: ["#939393", "#D3A3A9"],
 
@@ -62,13 +62,13 @@ module.exports = library.export(
       p: ["#828C80", "#64984E"],
 
       q: ["#77AB23", "#FCF63B"],
-      r: ["#502322", "#E9463C"],
-      s: ["#e0e628", "#b0deb6"],
+      r: ["#502322", "#a0271f"],
+      s: ["#7fa557", "#b0deb6"],
       t: ["#1E231C", "#5B7F4E"],
 
       u: ["#EDE9DF", "#8873AF"],
       v: ["#C6CBE7", "#7E47A3"],
-      w: ["#A53434", "#595830"],
+      w: ["#9499e4", "#516d63"],
       x: ["#A85057","#C2BEBF"],
 
       y: ["#A3A298", "#FFFA9D"],
@@ -185,6 +185,7 @@ module.exports = library.export(
 
       lines.forEach(
         function(line) {
+          console.log("\n",line)
           var segments = parseALittle(line)
 
           if (!segments) {
@@ -202,6 +203,8 @@ module.exports = library.export(
           var isHash = isString && segments.secondHalf[0] == "#"
 
           var isComment = line.match(/^\s*\/\//)
+
+          var isNumber = line.match(/^\s*[0-9,\.]+[^A-Za-z]*$/)
 
           if (isHash) {
             var letter = segments.secondHalf && segments.secondHalf[1].toLowerCase()
@@ -225,6 +228,8 @@ module.exports = library.export(
             el.addSelector(".tag")
           } else if (isComment) {
             el.addSelector(".comment")
+          } else if (isNumber) {
+            el.addSelector(".number")
           }
 
           lineElements.push(el)
@@ -265,8 +270,29 @@ module.exports = library.export(
           program))
     }
 
+    const OPENERS = ["[", "{", "("]
+    const CLOSERS = ["]", "}", ")"]
+
+    console.indent = function() {
+      const lines = Array.prototype.slice.call(
+        arguments)
+        .join(
+          " ")
+        .split(
+          "\n")
+
+      console.log(
+        lines.map(
+          function(line) {
+            return new Array(40).join(" ")+line
+          }
+        )
+        .join(
+          "\n"))}
+
     function lineContents(bridge, segments, stack, editLoop, background, foreground) {
 
+      console.indent("SEGMENTS "+JSON.stringify(segments, null, 2))
       var contents = []
 
       var allSymbols = [].concat(
@@ -287,6 +313,14 @@ module.exports = library.export(
             stack.push(
               "object literal")
           }
+        } else if (sym == "(") {
+          if (isFunctionLiteral) {
+            stack.push(
+              "argument signature")
+          } else {
+            stack.push(
+              "function call")
+          }
         }
       }
 
@@ -294,20 +328,32 @@ module.exports = library.export(
         if (sym == "]") {
           var peek = stack.pop()
           if (peek != "array literal") {
-            throw new Error("Expected to be closing an array")
+            throw new Error("Expected "+sym+" to be closing an array")
           }
         } else if (sym == "}") {
           var peek = stack.pop()
           if (peek != "function literal" && peek != "object literal") {
-            throw new Error("Expected to be closing a function or object literal")
+            throw new Error("Expected "+sym+"to be closing a function or object literal")
           }
-        }      
+        } else if (sym == ")") {
+          var peek = stack.pop()
+          if (peek != "argument signature" && peek != "function call") {
+            throw new Error("Expected "+sym+"to be closing an argument signature or function call")
+          }
+        }
+        console.indent("🥞  ", sym, "successfully closed", peek)   
       }
 
       function renderSymbol(sym) {
-        noticeOpeningSymbol(sym)
+        if (OPENERS.includes(sym)) {
+          noticeOpeningSymbol(sym)
+          console.indent("🥞  ", "sym", sym, "was an opener, stack is", stack.join(" ⊃ "))
+        }
         var html = renderSym(stack, sym)
-        noticeClosingSymbol(sym)
+        if (CLOSERS.includes(sym)) {
+          noticeClosingSymbol(sym)
+          console.indent("🥞  ", "sym", sym, "was a closer, stack is", stack.join(" ⊃ "))
+        }
         return html }
 
       while(segments) {
@@ -448,16 +494,22 @@ module.exports = library.export(
         "padding": "0.5em 0.5em 0.5em 3.25em",
       }),
 
+      element.style(".number",{
+        " txt": {
+          "font-weight": "600",
+        },
+      }),
+
       element.style(".tag",{
         " txt": {
           "background": TAG_RED,
           "color": TAG_TEXT,
-          "border-radius": "10em",
+          "border-radius": "100px",
           "border-left": SYM_PADDING+" solid "+TAG_RED,
           "border-right": SYM_PADDING+" solid "+TAG_RED,
-          "text-transform": "uppercase",
-          "font-style": "italic",
           "font-weight": "bold",
+          "font-size": "0.8em",
+          "padding": "0.2em",
           "vertical-align": "middle",
         },
 
