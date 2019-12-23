@@ -185,7 +185,7 @@ module.exports = library.export(
 
       lines.forEach(
         function(line) {
-          console.log("\n",line)
+          console.outdent("\n",line)
           var segments = parseALittle(line)
 
           if (!segments) {
@@ -240,8 +240,7 @@ module.exports = library.export(
         element.tag("line"),
         ".comment.logo",
         element(
-          element.tag("indent"),
-          "&nbsp;&nbsp;"),
+          element.tag("indent")),
         element(
           element.tag("sym"),
           ".text.comment",
@@ -273,7 +272,14 @@ module.exports = library.export(
     const OPENERS = ["[", "{", "("]
     const CLOSERS = ["]", "}", ")"]
 
+
+    console.outdent = function() {
+      if (!process.env.VERBOSE) return
+      console.log.apply(console, arguments)
+    }
+
     console.indent = function() {
+      if (!process.env.VERBOSE) return
       const lines = Array.prototype.slice.call(
         arguments)
         .join(
@@ -404,10 +410,7 @@ module.exports = library.export(
     }
 
     function renderSym(stack, sym) {
-      if (sym == "ezjs") {
-        return "<sym contenteditable=\"true\" spellcheck=\"false\" class=\"logo\">ezjs</sym>"
-
-      } else if (sym == "*") {
+      if (sym == "*") {
         return "<empty contenteditable=\"true\"> </empty>"
 
       } else if (sym) {
@@ -612,7 +615,7 @@ module.exports = library.export(
         "display": "block",
         "flex-direction": "row",
         "margin-bottom": "0.4em",
-        "text-indent": "-2.15em",
+        "text-indent": "-1.825em",
         "line-height": "1.4em",
         "font-family": "sans-serif",
         "font-size": "1.2em",

@@ -7,6 +7,7 @@ library.using([
   function(renderCode, WebSite, BrowserBridge) {
 
     var math = [
+      "// Simple example of a module call and a closure that does some work",
       "doStuffWithNumbers(",
       "  function(sum) {",
       "    var foo = [",
@@ -19,50 +20,31 @@ library.using([
     ]
 
     var stylesheet = [
-      // "library.define(",
-      // "  \"hello world\",[",
-      // "  \"web-site\",",
-      // "  \"web-element\",",
-      // "  \"browser-bridge\"],",
-      // "  function*(WebSite, element, BrowserBridge) {",
-      // "    var site =newWebSite(",
-      // "      *)",
-      // "    site.start(",
-      // "      3444)",
-      // "    var page = element(",
-      // "      \"hello world\")",
-      // "    site.addRoute(",
-      // "      \"get\",",
-      // "      \"/\",",
-      // "      function*(_, response) {",
-      // "        var bridge =newBrowserBridge(",
-      // "          ).forResponse(",
-      // "            response)",
-      // "        bridge.send(",
-      // "          page)",
-      // "      })})",
-      // "dogs.do(",
-      // "  \"laugh\",[",
-      // "  \"one\",",
-      // "  \"two. two Two they function they drop a line or two\"],",
-      // "  // wasn't that a long string?",
-      // "  function (this, that, theOther) {",
-      // "    var bone = new Treat(",
-      // "      )",
-      // "    dogs.start(",
-      // "      \"#before holiday\",",
-      // "      \"#foretold\",",
-      // "      \"#ROI\",",
-      // "      \"#asmr\",",
-      // "      \"#watercolor\",",
-      // "      \"#corgis\",",
-      // "      \"#solid\",",
-      // "      \"#queer\",",
-      // "      \"#underwater ballet\",",
-      // "      \"#verocious\",",
-      // "      \"#monument valley\",",
-      // "      \"#knock-out\",{",
-      // "      \"go\":\"go go\"})})",
+      "// Example using all of the different syntax available in EZJS, including objects and tag strings",
+      "dogs.do(",
+      "  \"laugh\",[",
+      "  \"one\",",
+      "  \"two. two Two they function they drop a line or two\"],",
+      "  // wasn't that a long string?",
+      "  function (this, that, theOther) {",
+      "    var bone = new Treat(",
+      "      1,",
+      "      2,",
+      "      3)",
+      "    dogs.start(",
+      "      \"#before holiday\",",
+      "      \"#foretold\",",
+      "      \"#ROI\",",
+      "      \"#asmr\",",
+      "      \"#watercolor\",",
+      "      \"#corgis\",",
+      "      \"#solid\",",
+      "      \"#queer\",",
+      "      \"#underwater ballet\",",
+      "      \"#verocious\",",
+      "      \"#monument valley\",",
+      "      \"#knock-out\",{",
+      "      \"go\":\"go go\"})})",
     ]
 
     // var backlog = [
@@ -83,6 +65,7 @@ library.using([
 
 
     var basicSite = [
+      "// Hello world site demonstrating a complete web application",
       "library.define(",
       "  \"hello world\",[",
       "  \"web-site\",",
@@ -123,11 +106,14 @@ library.using([
         var code2 = bridge.partial()
         renderCode(code2, basicSite)
 
+        var code3 = bridge.partial()
+        renderCode(code3, stylesheet)
+
 
         // var swatches = bridge.partial()
         // renderCode.colorSwatches(swatches)
 
-        bridge.send([code, code2])
+        bridge.send([code, code2, code3])
       }
     )
 
