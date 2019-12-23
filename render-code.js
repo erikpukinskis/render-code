@@ -204,7 +204,7 @@ module.exports = library.export(
 
           var isComment = line.match(/^\s*\/\//)
 
-          var isNumber = line.match(/^\s*[0-9,\.]+[^A-Za-z]*$/)
+          var isNumber = line.match(/^\s*[0-9\.]+[^A-Za-z]*$/)
 
           if (isHash) {
             var letter = segments.secondHalf && segments.secondHalf[1].toLowerCase()
@@ -417,11 +417,18 @@ module.exports = library.export(
 
     function renderTxt(text, background, foreground) {
       var el = element(element.tag("txt"), text)
-      el.appendStyles({
-        "background": background,
-        "border-left": SYM_PADDING+" solid "+background,
-        "border-right": SYM_PADDING+" solid "+background,
-        "color": foreground})
+      if (background) {
+        el.appendStyles({
+          "background": background,
+          "border-left": SYM_PADDING+" solid "+background,
+          "border-right": SYM_PADDING+" solid "+background,
+        })
+      }
+      if (foreground) {
+        el.appendStyles({
+          "color": foreground
+        })
+      }
       return el.html()
     }
 
@@ -481,13 +488,14 @@ module.exports = library.export(
     var stylesheet = element.stylesheet([
       element.style(".editable-container",{
         "min-width": "15em",
-        "max-width": "400px",
+        "max-width": "450px",
         "min-height": "5em",
         "border": "3px solid "+LIGHT_SYM,
         "box-sizing": "border-box",
         "border-radius": "8px",
         "padding": "5px",
         "background": "rgba(255,255,255,0.9)",
+        "margin-bottom": "2em",
         }),
 
       element.style(".editable",{
@@ -573,6 +581,7 @@ module.exports = library.export(
         "margin-top": "2em",
         "background": SYM_BACKGROUND,
         "border-color": SYM_BACKGROUND,
+        "border-right-width": "5px",
       }),
 
       element.style("line.logo txt",{
@@ -606,7 +615,8 @@ module.exports = library.export(
         "text-indent": "-2.15em",
         "line-height": "1.4em",
         "font-family": "sans-serif",
-        "font-size": "1.3em",
+        "font-size": "1.2em",
+        "overflow-wrap": "normal",
       }),
 
       element.style("body", {

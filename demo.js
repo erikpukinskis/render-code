@@ -88,9 +88,9 @@ library.using([
       "  \"web-site\",",
       "  \"web-element\",",
       "  \"browser-bridge\"],",
-      "  function*(WebSite, element, BrowserBridge) {",
-      "    var site =newWebSite(",
-      "      *)",
+      "  function(WebSite, element, BrowserBridge) {",
+      "    var site = new WebSite(",
+      "      )",
       "    site.start(",
       "      3444)",
       "    var page = element(",
@@ -98,8 +98,8 @@ library.using([
       "    site.addRoute(",
       "      \"get\",",
       "      \"/\",",
-      "      function*(_, response) {",
-      "        var bridge =newBrowserBridge(",
+      "      function(_, response) {",
+      "        var bridge = new BrowserBridge(",
       "          ).forResponse(",
       "            response)",
       "        bridge.send(",
@@ -120,14 +120,14 @@ library.using([
         var code = bridge.partial()
         renderCode(code, math)
 
-        // var code2 = bridge.partial()
-        // renderCode(code2, basicSite)
+        var code2 = bridge.partial()
+        renderCode(code2, basicSite)
 
 
         // var swatches = bridge.partial()
         // renderCode.colorSwatches(swatches)
 
-        bridge.send([code])
+        bridge.send([code, code2])
       }
     )
 
