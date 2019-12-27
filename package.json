@@ -5,7 +5,7 @@
   "main": "render-code",
   "dependencies": {
     "module-library": "*",
-    "parse-a-little-js": "^0.26.0"
+    "parse-a-little-js": "^0.27.0"
   },
   "devDependencies": {
     "browser-bridge": "^0.161.0",
