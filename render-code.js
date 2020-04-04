@@ -507,7 +507,8 @@ module.exports = library.export(
 
       element.style(".number",{
         " txt": {
-          "font-weight": "600",
+          "font-weight": "bold",
+          "color": "#79caff",
         },
       }),
 
