@@ -6,6 +6,80 @@ library.using([
   "browser-bridge"],
   function(renderCode, WebSite, BrowserBridge) {
 
+    // var food = [
+    //   "library.using(",
+    //   "  function(WebSite, webElement) {",
+    //   "    var products = [",
+    //   "      webElement([",
+    //   "        webElement(\"button\", \"Add to cart\"),",
+    //   "        \"Oasis hummus\"),",
+    //   "      webElement([",
+    //   "        webElement(\"button\", \"Add to cart\"),",
+    //   "        \"Oasis lavash\"),",
+    //   "      webElement([",
+    //   "        webElement(\"button\", \"Add to cart\"),",
+    //   "        \"Gluten free bagels\"),",
+    //   "      webElement([",
+    //   "        webElement(\"button\", \"Add to cart\"),",
+    //   "        \"Tempeh\")]",
+    //   "",
+    //   "    var cart = webElement(",
+    //   "      \"form\",{",
+    //   "      \"method\": \"GET\",",
+    //   "      \"action\": \"/order\"},[",
+    //   "      webElement(\"h2\", \"Cart\"),",
+    //   "      \"Oasis hummus, Oasis lavash, tempeh\",",
+    //   "      webElement(",
+    //   "        \"input\",{",
+    //   "        \"type\": \"text\",",
+    //   "        \"placeholder\": \"Enter your name\",",
+    //   "        \"name\": \"subscriberName\"}),",
+    //   "      webElement(",
+    //   "        \"input\",{",
+    //   "        \"type\": \"submit\",",
+    //   "        \"value\": \"Check out\"})])",
+    //   "",
+    //   "    var order = [",
+    //   "      webElement(\"h1\", \"Thank you for your interest!\"),",
+    //   "      webElement(\"p\", \"To place your order text the following code to Erik: (812-***-****\"),",
+    //   "      webElement(",
+    //   "        \"p\",",
+    //   "        webElement(\"strong\", \"HLTK\")]",
+    //   "",
+    //   "    var site = new WebSite()",
+    //   "",
+    //   "    var column = webElement.template(",
+    //   "      \".column\",",
+    //   "      webElement.style({",
+    //   "        \"float\": \"left\",",
+    //   "        \"max-width\": \"200px\",",
+    //   "        \"margin-left\": \"15px\",",
+    //   "        \"margin-top\": \"50px\"}))",
+    //   "",
+    //   "    var stylesheet = webElement.stylesheet(",
+    //   "      column)",
+    //   "",
+    //   "    var productsPage = [",
+    //   "      column(products),",
+    //   "      column(cart),",
+    //   "      stylesheet]",
+    //   "",
+    //   "    var orderPage = webElement(",
+    //   "      \".lil-page\",",
+    //   "      order,",
+    //   "      stylesheet)",
+    //   "",
+    //   "    site.addRoute(",
+    //   "      \"get\",",
+    //   "      \"/\",",
+    //   "      productsPage)",
+    //   "",
+    //   "    site.addRoute(",
+    //   "      \"get\",",
+    //   "      \"/order\",",
+    //   "      orderPage)})",
+    // ]
+
     var math = [
       "// Simple example of a module call and a closure that does some work",
       "doStuffWithNumbers(",
@@ -106,14 +180,16 @@ library.using([
         var code2 = bridge.partial()
         renderCode(code2, basicSite)
 
-        var code3 = bridge.partial()
-        renderCode(code3, stylesheet)
+        // var code3 = bridge.partial()
+        // renderCode(code3, stylesheet)
 
+        // var code4 = bridge.partial()
+        // renderCode(code4, food)
 
         // var swatches = bridge.partial()
         // renderCode.colorSwatches(swatches)
 
-        bridge.send([code, code2, code3])
+        bridge.send([code, code2])
       }
     )
 
